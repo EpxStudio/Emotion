@@ -15,12 +15,11 @@ public class Energy : MonoBehaviour {
     
     Transform firePoint;
     private Animator anim;
-    private float shotDelay = 0;
 
     // Use this for initialization
     void Awake () {
-        firePoint = transform.Find("FirePoint");
         anim = GetComponent<Animator>();
+        firePoint = transform.Find("FirePoint");
         if (firePoint == null) {
             Debug.LogError("No firepoint my dude");
         }
@@ -35,12 +34,10 @@ public class Energy : MonoBehaviour {
         else {
             facingRight = false;
         }
-        if (Input.GetButtonDown("Fire1") && anim.GetBool("Ground") && Time.time >= shotDelay) {
+        if (Input.GetButtonDown("Fire1") && anim.GetBool("Ground")) {
             firing = true;
             anim.SetBool("Energy", firing);
-            Shoot();
-            firing = false;
-            shotDelay = Time.time + .25f;
+            StartCoroutine(ExecuteAfterTime(.25f));
         }
 	}
 
